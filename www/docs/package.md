@@ -3,7 +3,7 @@ id: package
 title: Package
 ---
 
-`ghz` can be used programmatically as Go package within Go applications. See detailed [godoc](https://godoc.org/github.com/bojand/ghz) documentation. Example usage:
+`ghz` can be used programmatically as Go package within Go applications. See detailed [godoc](https://godoc.org/github.com/pallscall/ghz) documentation. Example usage:
 
 
 ```go
@@ -13,8 +13,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/bojand/ghz/printer"
-	"github.com/bojand/ghz/runner"
+	"github.com/pallscall/ghz/printer"
+	"github.com/pallscall/ghz/runner"
 )
 
 func main() {

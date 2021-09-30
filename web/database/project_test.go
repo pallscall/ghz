@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/bojand/ghz/web/model"
+	"github.com/pallscall/ghz/web/model"
 	"github.com/stretchr/testify/assert"
 )
 

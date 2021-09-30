@@ -6,9 +6,9 @@
 
 # ghz
 
-[![Release](https://img.shields.io/github/release/bojand/ghz.svg?style=flat-square)](https://github.com/bojand/ghz/releases/latest)
-![Build Status](https://github.com/bojand/ghz/workflows/build/badge.svg)
-[![Go Report Card](https://goreportcard.com/badge/github.com/bojand/ghz?style=flat-square)](https://goreportcard.com/report/github.com/bojand/ghz)
+[![Release](https://img.shields.io/github/release/bojand/ghz.svg?style=flat-square)](https://github.com/pallscall/ghz/releases/latest)
+![Build Status](https://github.com/pallscall/ghz/workflows/build/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/pallscall/ghz?style=flat-square)](https://goreportcard.com/report/github.com/pallscall/ghz)
 [![License](https://img.shields.io/github/license/bojand/ghz.svg?style=flat-square)](https://raw.githubusercontent.com/bojand/ghz/master/LICENSE)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg?style=flat-square)](https://www.paypal.me/bojandj)
 [![Buy me a coffee](https://img.shields.io/badge/buy%20me-a%20coffee-orange.svg?style=flat-square)](https://www.buymeacoffee.com/bojand)
@@ -23,7 +23,7 @@ All documentation at [ghz.sh](https://ghz.sh).
 
 ### Download
 
-1. Download a prebuilt executable binary for your operating system from the [GitHub releases page](https://github.com/bojand/ghz/releases).
+1. Download a prebuilt executable binary for your operating system from the [GitHub releases page](https://github.com/pallscall/ghz/releases).
 2. Unzip the archive and place the executable binary wherever you would like to run it from. Additionally consider adding the location directory in the `PATH` variable if you would like the `ghz` command to be available everywhere.
 
 ### Homebrew
@@ -37,7 +37,7 @@ brew install ghz
 **Clone**
 
 ```sh
-git clone https://github.com/bojand/ghz
+git clone https://github.com/pallscall/ghz
 ```
 
 **Build using make**

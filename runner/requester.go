@@ -8,8 +8,8 @@ import (
 	"sync"
 	"time"
 
-	"github.com/bojand/ghz/load"
-	"github.com/bojand/ghz/protodesc"
+	"github.com/pallscall/ghz/load"
+	"github.com/pallscall/ghz/protodesc"
 	"github.com/jhump/protoreflect/desc"
 	"github.com/jhump/protoreflect/dynamic"
 	"github.com/jhump/protoreflect/dynamic/grpcdynamic"

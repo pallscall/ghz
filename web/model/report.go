@@ -6,7 +6,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/bojand/ghz/runner"
+	"github.com/pallscall/ghz/runner"
 )
 
 // LatencyDistributionList is a slice of LatencyDistribution pointers

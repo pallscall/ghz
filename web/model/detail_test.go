@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/bojand/ghz/runner"
+	"github.com/pallscall/ghz/runner"
 	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 )

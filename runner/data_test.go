@@ -7,8 +7,8 @@ import (
 
 	"github.com/golang/protobuf/proto"
 
-	"github.com/bojand/ghz/internal/helloworld"
-	"github.com/bojand/ghz/protodesc"
+	"github.com/pallscall/ghz/internal/helloworld"
+	"github.com/pallscall/ghz/protodesc"
 
 	"github.com/stretchr/testify/assert"
 )
