@@ -152,13 +152,13 @@ func NewRequester(c *RunConfig) (*Requester, error) {
 
 // Run makes all the requests and returns a report of results
 // It blocks until all work is done.
-func (b *Requester) Run() (*Report, error) {
+func (b *Requester) Run() (*Report, []*Worker, error) {
 
 	defer close(b.stopCh)
 
 	cc, err := b.openClientConns()
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	start := time.Now()
@@ -185,11 +185,11 @@ func (b *Requester) Run() (*Report, error) {
 
 	err = b.runWorkers(wt, p)
 
-	report := b.Finish()
+	report, works := b.Finish()
 
 	b.closeClientConns()
 
-	return report, err
+	return report, works, err
 }
 
 // Stop stops the test
@@ -216,7 +216,7 @@ func (b *Requester) Stop(reason StopReason) {
 }
 
 // Finish finishes the test run
-func (b *Requester) Finish() *Report {
+func (b *Requester) Finish() (*Report, []*Worker) {
 	close(b.results)
 	total := time.Since(b.start)
 
@@ -236,7 +236,7 @@ func (b *Requester) Finish() *Report {
 	r = b.stopReason
 	b.lock.Unlock()
 
-	return b.reporter.Finalize(r, total)
+	return b.reporter.Finalize(r, total), b.workers
 }
 
 func (b *Requester) openClientConns() ([]*grpc.ClientConn, error) {
