@@ -323,7 +323,7 @@ func main() {
 		logger.Debugw("Start Run", "config", cfg)
 	}
 
-	report, err := runner.Run(cfg.Call, cfg.Host, options...)
+	report, _, err := runner.Run(cfg.Call, cfg.Host, options...)
 	if err != nil {
 		if logger != nil {
 			logger.Errorf("Error from run: %+v", err.Error())
