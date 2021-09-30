@@ -1,4 +1,4 @@
-module github.com/bojand/ghz
+module github.com/pallscall/ghz
 
 go 1.14
 
