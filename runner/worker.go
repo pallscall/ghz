@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/golang/protobuf/jsonpb"
 	"io"
 	"time"
 
@@ -24,6 +25,10 @@ type TickValue struct {
 	reqNumber uint64
 }
 
+type Response struct {
+	Data string
+	Header map[string][]string
+}
 // Worker is used for doing a single stream of requests in parallel
 type Worker struct {
 	stub grpcdynamic.Stub
@@ -40,6 +45,8 @@ type Worker struct {
 	msgProvider      StreamMessageProviderFunc
 
 	streamRecv StreamRecvMsgInterceptFunc
+
+	Response Response
 }
 
 func (w *Worker) runWorker() error {
@@ -173,9 +180,14 @@ func (w *Worker) makeUnaryRequest(ctx *context.Context, reqMD *metadata.MD, inpu
 	if w.config.enableCompression {
 		callOptions = append(callOptions, grpc.UseCompressor(gzip.Name))
 	}
+	var respHeaders  metadata.MD
+	callOptions = append(callOptions, grpc.Header(&respHeaders))
 
 	res, resErr = w.stub.InvokeRpc(*ctx, w.mtd, input, callOptions...)
-
+	m := jsonpb.Marshaler{}
+	response, _ := m.MarshalToString(res)
+	fmt.Print("--------makeUnaryRequest----------\n", response, respHeaders["content-type"])
+	w.Response = Response{Data: response, Header:respHeaders}
 	if w.config.hasLog {
 		w.config.log.Debugw("Received response", "workerID", w.workerID, "call type", "unary",
 			"call", w.mtd.GetFullyQualifiedName(),
@@ -194,6 +206,7 @@ func (w *Worker) makeClientStreamingRequest(ctx *context.Context,
 		callOptions = append(callOptions, grpc.UseCompressor(gzip.Name))
 	}
 	str, err := w.stub.InvokeRpcClientStream(*ctx, w.mtd, callOptions...)
+	fmt.Print("--------makeClientStreamingRequest----------", str)
 	if err != nil {
 		if w.config.hasLog {
 			w.config.log.Errorw("Invoke Client Streaming RPC call error: "+err.Error(), "workerID", w.workerID,
@@ -320,7 +333,7 @@ func (w *Worker) makeServerStreamingRequest(ctx *context.Context, input *dynamic
 	defer callCancel()
 
 	str, err := w.stub.InvokeRpcServerStream(callCtx, w.mtd, input, callOptions...)
-
+	fmt.Print("------makeClientStreamingRequest-----------", str)
 	if err != nil {
 		if w.config.hasLog {
 			w.config.log.Errorw("Invoke Server Streaming RPC call error: "+err.Error(), "workerID", w.workerID,
@@ -419,7 +432,7 @@ func (w *Worker) makeBidiRequest(ctx *context.Context,
 		callOptions = append(callOptions, grpc.UseCompressor(gzip.Name))
 	}
 	str, err := w.stub.InvokeRpcBidiStream(*ctx, w.mtd, callOptions...)
-
+	fmt.Print("---------makeBidiRequest---------", str)
 	if err != nil {
 		if w.config.hasLog {
 			w.config.log.Errorw("Invoke Bidi RPC call error: "+err.Error(),
