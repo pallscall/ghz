@@ -16,11 +16,11 @@ import (
 //		WithDataFromFile("data.json"),
 //		WithInsecure(true),
 //	)
-func Run(call, host string, options ...Option) (*Report, error) {
+func Run(call, host string, options ...Option) (*Report, []*Worker, error) {
 	c, err := NewConfig(call, host, options...)
 
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	oldCPUs := runtime.NumCPU()
@@ -31,7 +31,7 @@ func Run(call, host string, options ...Option) (*Report, error) {
 	reqr, err := NewRequester(c)
 
 	if err != nil {
-		return nil, err
+		return nil, nil, err
 	}
 
 	cancel := make(chan os.Signal, 1)
@@ -49,7 +49,10 @@ func Run(call, host string, options ...Option) (*Report, error) {
 		}()
 	}
 
-	rep, err := reqr.Run()
-
-	return rep, err
+	rep, wk, err := reqr.Run()
+	//str := ""
+	//for _, w := range wk {
+	//	str += w.response
+	//}
+	return rep, wk, err
 }
